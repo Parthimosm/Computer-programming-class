@@ -1,0 +1,194 @@
+WALL
+CODE
+--Matthew Parthimos(program incomplete) 
+length = 10
+width = 0
+height = 4
+count = 1
+x = 2
+
+function random()
+    r = math.random(1,16) 
+    slot = r 
+end
+
+function slotc()
+    while turtle.getItemCount(slot) == 0 do
+        random()
+        turtle.select(slot)
+    end
+end
+--this function checks if there is anything in front of it
+function frontcheck()
+    up = 0
+    while turtle.detect() do 
+        turtle.up()
+        up = up + 1
+        end
+        if up == 1 then
+        turtle.forward()
+    end
+end
+
+
+--this function will make the wall segment 
+function wall()
+	for n = 1, length do 
+		if x % 2 == 0  then 
+		    while turtle.detectDown() ~= true do
+		    	turtle.down()
+	    	end
+		for n = 1, height - 1 do
+			turtle.up()
+			random()
+			slotc()
+			turtle.select(slot)
+			turtle.placeDown()
+			x = x + 1
+		end
+		frontcheck()
+		turtle.forward()
+		while turtle.detectDown() ~= true do
+			turtle.down()
+		end
+		for n = 1, height do
+			turtle.up()
+			random()
+			slotc()
+			turtle.select(slot)
+			turtle.placeDown()
+		end
+		frontcheck()
+		turtle.forward()
+		while turtle.detectDown() ~= true do
+			turtle.down()
+		end
+		for n = 1, height - 1 do
+			turtle.up()
+			random()
+			slotc()
+			turtle.select(slot)
+			turtle.placeDown()
+		end
+		turtle.turnRight()
+		turtle.forward()
+		turtle.turnLeft()
+		for n = 1, 2 do turtle.back() 
+		    end 
+		else
+		random()
+		slotc()
+		turtle.select(slot)
+		turtle.placeDown()
+		frontcheck()
+		turtle.forward()
+		x = x + 1
+		while turtle.detectDown() ~= true do
+			turtle.down()
+		end
+		for n = 1, height do
+			turtle.up()
+			random()
+			slotc()
+			turtle.select(slot)
+			turtle.placeDown()
+		end
+		
+		frontcheck()
+		turtle.forward()
+		turtle.down()
+		random()
+		slotc()
+		turtle.select(slot)
+		turtle.placeDown()
+		turtle.turnRight()
+		turtle.forward()
+		turtle.turnLeft()
+		for n = 1, 2 do turtle.back() 
+		    end 
+		end
+	end
+end
+
+function turrets()
+	for n = 1, height + 3 do
+		turtle.up()
+		random()
+		slotc()
+		turtle.select(slot)
+		turtle.placeDown()
+end
+end
+function window()
+	for n = 1, 2 do
+		turtle.up()
+		random()
+		slotc()
+		turtle.select(slot)
+		turtle.placeDown()
+		end 
+	for n = 1, 2 do
+		turtle.up()
+	end 
+	for n = 1, 2 do
+		turtle.up()
+		random()
+		slotc()
+		turtle.select(slot)
+		turtle.placeDown()
+	end 
+end 
+
+function turret()
+  while turtle.detectDown() ~= true do
+    turtle.down()
+   end 
+   
+for n = 1, 6 do
+	turrets()
+	turtle.forward()
+	  while turtle.detectDown() ~= true do
+    turtle.down()
+   end 
+	end
+	
+	turtle.turnRight()
+	
+	for n = 1, 3 do
+	turrets()
+	turtle.forward()
+	  while turtle.detectDown() ~= true do
+    turtle.down()
+   end 
+	end
+	
+	for n = 1, 3 do
+	window()
+	turtle.forward()
+	  while turtle.detectDown() ~= true do
+    turtle.down()
+   end 
+	end
+	
+	for n = 1, 3 do
+	turrets()
+	turtle.forward()
+	  while turtle.detectDown() ~= true do
+    turtle.down()
+   end 
+	end
+	turtle.turnRight()
+  for n = 1, 9 do
+  turrets()
+  turtle.forward()
+    while turtle.detectDown() ~= true do
+    turtle.down()
+    end 
+end
+turtle.turnRight() 
+
+end
+
+turret()
+
+
