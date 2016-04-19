@@ -1,0 +1,72 @@
+local x1, y1 = term.getSize() --Returns the size of your terminal
+local char = "^" --Stores your character direction
+local currentX = 25 --Saves the current X of the cursor
+local currentY = 15 --Saves the current Y of the cursor
+local running = true
+ 
+ 
+function drawCursor(x,y)
+ 
+  x = currentX
+  y = currentY
+ 
+ 
+  term.clear() --Clears the screen
+  term.setCursorPos(currentX, currentY)  --Draws a cursor at the current X/Y
+  write(char)
+ end  
+ 
+ 
+function gameLoop()
+hit = 0
+ 
+alienRandX = math.random(30)
+alienRandY = math.random(10)
+ 
+function fireShell()
+  fire = true
+ 
+  xshell = currentX
+  yshell = currentY
+ 
+  while fire == true do
+    sleep(0.05)
+    yshell = yshell - 1
+    paintutils.drawFilledBox(xshell, yshell-1, xshell, yshell-1, 2)
+    paintutils.drawFilledBox(xshell, yshell, xshell, yshell, 32768)
+   
+    if yshell < 0 then
+      fire = false
+     end
+ 
+ end  
+end
+ 
+ 
+ 
+while running == true do
+  gun = drawCursor(currentX, currentY)
+  drawCursor()
+ 
+  local e,key = os.pullEvent( "key" )
+ 
+                char = "^" --Change your direction to face down
+   if key == 203 or key == 30 then --left
+                currentX = currentX -1
+                char = "^" --Change your direction to face left
+   elseif key == 205 or key == 32 then --right
+                currentX = currentX +1
+                char = "^" --Change your direction to face right
+   elseif key == 57 then
+     fireShell()
+     
+    end
+   
+   if hit == 0 then
+    -- paintutils.drawFilledBox(alienRandX, alienRandY, alienRandX + 1, alienRandY, 16384)
+   paintutils.drawFilledBox(alienRandY, alienRandX, alienRandY, alienRandX + 1, 2)
+   end
+   
+end
+end
+gameLoop()
