@@ -1,0 +1,33 @@
+local x1, y1 = term.getSize() --Returns the size of your terminal
+local char = "^" --Stores your character direction
+local currentX = 25 --Saves the current X of the cursor
+local currentY = 15 --Saves the current Y of the cursor
+local running = true
+--time = os.date()
+score = 0 
+hit = false
+s = os.startTimer(1)
+s = 0
+t = 0
+   
+hit = false
+ 
+function floor()
+
+ paintutils.drawFilledBox(0,y1 - 1,x1,y1 (2))
+
+end 
+
+
+function gameLoop()
+
+while true do
+floor()
+
+
+
+
+end 
+
+
+http://pastebin.com/tDe6g6gw
