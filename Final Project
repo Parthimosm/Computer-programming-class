@@ -1,0 +1,117 @@
+x1,y1 = term.getSize() --Returns the size of your terminal
+local char = "^" --makes charachter face up
+local currentX = 25 --Saves the current X of the cursor
+local currentY = 15 --Saves the current Y of the cursor
+local running = true
+score = 0 --holds the score value
+hit = false --becomes true if bullet interacts with target
+plus1 = "+1"
+--this function draws the cursor to the screen
+function drawCursor(x,y)
+  x = currentX
+  y = currentY
+ 
+  term.setCursorPos(currentX, currentY)  --Draws a cursor at the current X/Y
+  write(char)
+ end  
+ 
+--this is the main gameloop
+function gameLoop()
+ 
+--these variables generate a randome nomber to set as the coordinates
+--for the target boxes
+alienRandX = math.random(50)
+alienRandY = math.random(10)
+ 
+--this function generates the bullet  
+function fireShell()
+  fire = true
+ 
+  --makes a new variable so the value doesnt change
+  xshell = currentX
+  yshell = currentY
+ 
+  while fire == true do
+    sleep(0.05)--regulates the speed
+    yshell = yshell - 1
+    --draws a box and fills in the one behind it
+    paintutils.drawFilledBox(xshell, yshell-1, xshell, yshell-1, 2)
+    paintutils.drawFilledBox(xshell, yshell, xshell, yshell, 32768)
+   
+   
+    check_x_1 = xshell <= alienRandX + 1
+    check_x_2 = xshell >= alienRandX
+    --check_x_1 and check_x_2 check if the bullet is in beetween ether ends of the target
+    check_y_1 = yshell <= alienRandY
+    --check_y_1 checks if bullet is above bottom of target  
+   
+   
+    -- if all variables are true then hit = true
+    if check_x_1 == true and check_x_2 == true and check_y_1 == true then
+      hit = true
+      score = score + 1 --adds one to score
+    end
+   
+    --if the bullet pases the top of the screen it will stop
+    if yshell < 0 then
+      fire = false
+     end
+ 
+    --if bullet hits then fire stops
+    if hit == true then
+      fire = false
+    end
+ 
+  end  
+end
+ 
+while running == true do
+ 
+ --this clears the screen
+  paintutils.drawFilledBox(0, 0, x1,y1, (32768))
+ 
+   --this writes the score
+   write("Score:")
+   write(score)
+   --draws cursor
+   drawCursor(currentX, currentY)
+   --draws target
+   paintutils.drawFilledBox(alienRandX, alienRandY, alienRandX +1, alienRandY, (2))
+  --makes plus1 nothing so once hit if statement finishes it goes back to nothing
+    plus1 = " "
+  ----------------------------------
+  --returns value of event and key pressed
+  local event,key = os.pullEvent( "key" )
+ 
+         --keys 'a' or left arrow
+   if key == 203 or key == 30 then --left
+                sleep(0.01)
+                currentX = currentX -2
+         --keys 'b' or right arrow      
+   elseif key == 205 or key == 32 then --right
+                sleep(0.01)
+                currentX = currentX +2
+         --key spacebar      
+   elseif key == 57 then
+   --fires bullet if spacebar is pressed
+     fireShell()
+ 
+     
+    end
+     
+   --spawns a new target once hit == true
+     if hit == true then
+       alienRandX = math.random(50)
+       alienRandY = math.random(10)
+       --sets plus1 to +1!
+       plus1 = "+1!"
+       write(plus1)
+       --sleeps for .5 sec to let player see +1
+       sleep(0.5)
+       hit = false
+     end
+     
+end
+end
+--runs gameloop
+gameLoop()
